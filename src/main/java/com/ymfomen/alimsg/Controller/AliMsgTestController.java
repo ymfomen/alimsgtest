@@ -12,6 +12,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,8 +41,8 @@ public class AliMsgTestController {
     private static int newcode;
 
     // 随机生成的4位验证码
-    public static int getNewcode() {
-        return newcode;
+    public static String getNewcode() {
+        return "{\"code\":\"" + newcode + "\"}";
     }
 
     public static void setNewcode() {
@@ -55,11 +56,11 @@ public class AliMsgTestController {
      * @return 返回成功或失败页面
      */
     @RequestMapping(value = "/sendsms", method = RequestMethod.POST, produces = {"application/json"})
+    @ResponseBody
     public String SendSms(HttpServletRequest request) {
         setNewcode();
-        String code = Integer.toString(getNewcode());
+        String code = getNewcode();
         String phoneNumbers = request.getParameter("PhoneNumbers");
-//        code = "{\"code\":\"" + code + "\"}";
         String sendSms = SendSmsUtil(phoneNumbers, code);//填写你需要
         if (sendSms.equals("ok")) {
             return "/index";
