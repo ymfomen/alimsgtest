@@ -74,7 +74,6 @@ public class AliMsgTestController {
         }
 
     }
-
     /**
      * 阿里短信服务 SendSms接口工具类
      * @param phoneNumbers 需接收验证码的手机号
@@ -136,66 +135,14 @@ public class AliMsgTestController {
             e.printStackTrace();
         }
     }
-
-
-
-
-
-
-
     // 以下为测试代码，随机生成验证码
     private  int newcode;
-
     // 随机生成的4位验证码
     public String getNewcode() {
         return "{\"code\":\"" + newcode + "\"}";
     }
-
     public void setNewcode() {
         newcode = (int) (Math.random() * 9999) + 100;  //每次调用生成一次四位数的随机数
     }
 
 }
-
-
-
-
-//    /**
-//     * 阿里短信服务 SendSms接口工具类
-//     *
-//     * @param phoneNumbers 需接收验证码的手机号
-//     * @param code         验证码
-//     * @return 返回ok则代表信息发送成功 否则失败
-//     */
-//    private String SendSmsUtil(String phoneNumbers, String code) {
-//        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", AccessKeyID, AccessKeySecret);
-//        IAcsClient client = new DefaultAcsClient(profile);
-//        CommonRequest sendSmsRequest = new CommonRequest();
-//        sendSmsRequest.setSysMethod(MethodType.POST);
-//        sendSmsRequest.setSysDomain("dysmsapi.aliyuncs.com");
-//        sendSmsRequest.setSysVersion("2017-05-25");
-//        sendSmsRequest.setSysAction("SendSms");
-//        sendSmsRequest.putQueryParameter("RegionId", "cn-hangzhou");
-////        需接收短信的手机号码从前端传入
-//        sendSmsRequest.putQueryParameter("PhoneNumbers", phoneNumbers);
-////        短信签名名称 阿里短信服务提供
-//        sendSmsRequest.putQueryParameter("SignName", SignName);
-////        短信模版ID 阿里短信服务提供
-//        sendSmsRequest.putQueryParameter("TemplateCode", TemplateCode);
-////         可选:模板中的变量替换JSON串,如模板内容为"亲爱的用户,您的验证码为${code}"时,此处的值为
-//        sendSmsRequest.putQueryParameter("TemplateParam", code);
-//        try {
-//            CommonResponse response = client.getCommonResponse(sendSmsRequest);
-//            System.out.println(response.getData());
-//            if (response.getData().equals("OK")) {
-//                System.out.print("短信发送成功");
-//                return "ok";
-//            } else {
-//                System.out.println("短信发送失败");
-//                return "error";
-//            }
-//        } catch (ClientException e) {
-//            e.printStackTrace();
-//        }
-//        return "error";
-//    }
