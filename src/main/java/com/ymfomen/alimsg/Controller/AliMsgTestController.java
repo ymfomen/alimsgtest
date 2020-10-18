@@ -45,6 +45,12 @@ public class AliMsgTestController {
     @Value("${ali.SendSms}")
     private String sendSms;
 
+    /**
+     * 阿里云短信服务 获取短信验证码 将验证码存放至session中 设置5分钟有效期
+     * @param request
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/AliSendSms", method = RequestMethod.POST, produces = {"application/json"})
     public String AliSendSms(HttpServletRequest request, HttpSession session) {
         String phoneNumbers = request.getParameter("PhoneNumbers");
