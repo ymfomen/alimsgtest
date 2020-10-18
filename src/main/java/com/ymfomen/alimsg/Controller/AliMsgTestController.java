@@ -1,5 +1,6 @@
 package com.ymfomen.alimsg.Controller;
 
+import com.alibaba.fastjson.JSON;
 import com.ymfomen.alimsg.Utli.AliMsgUtil;
 import com.ymfomen.alimsg.Utli.OperatorJudgeUtil;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -72,5 +74,33 @@ public class AliMsgTestController {
         } else {
             return "该号码属于电信用户";
         }
+    }
+
+    /**
+     * 请求提交验证短信验证码是否有效
+     * @param request request
+     * @param session session
+     * @return
+     */
+    @RequestMapping(value = "/Submint", method = RequestMethod.POST, produces = {"application/json"})
+    public String AliIndex(HttpServletRequest request, HttpSession session){
+        String phoneNumbers = request.getParameter("PhoneNumbers");
+        /**
+         * 获取session中存放的验证码
+         */
+        Object attribute = session.getAttribute(phoneNumbers);
+        if (attribute != null) {
+//            JSON.parse(attribute.toString());
+             Map maps = (Map)JSON.parse(attribute.toString());
+            String sessionCode = (String) maps.get("code");
+                    String code = request.getParameter("CODE");
+                    if (code.equals(sessionCode)) {
+                        return "/index";
+                    } else {
+                        return "验证码输入错误请重新输入";
+                    }
+            } else {
+                return "请先获取验证码";
+            }
     }
 }
