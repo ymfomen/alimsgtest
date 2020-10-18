@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -47,9 +46,9 @@ public class AliMsgTestController {
 
     /**
      * 阿里云短信服务 获取短信验证码 将验证码存放至session中 设置5分钟有效期
-     * @param request
-     * @param session
-     * @return
+     * @param request request
+     * @param session session
+     * @return String
      */
     @RequestMapping(value = "/AliSendSms", method = RequestMethod.POST, produces = {"application/json"})
     public String AliSendSms(HttpServletRequest request, HttpSession session) {
@@ -86,13 +85,13 @@ public class AliMsgTestController {
      * 请求提交验证短信验证码是否有效
      * @param request request
      * @param session session
-     * @return
+     * @return String
      */
     @RequestMapping(value = "/Submint", method = RequestMethod.POST, produces = {"application/json"})
     public String AliIndex(HttpServletRequest request, HttpSession session){
         String phoneNumbers = request.getParameter("PhoneNumbers");
-        /**
-         * 获取session中存放的验证码
+        /*
+          获取session中存放的验证码
          */
         Object attribute = session.getAttribute(phoneNumbers);
         if (attribute != null) {
